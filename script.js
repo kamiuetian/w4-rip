@@ -106,6 +106,10 @@
       if (submitButton) submitButton.disabled = true;
       if (formMessage) formMessage.textContent = 'Sending...';
 
+      // Clear honeypot fields right before submit to avoid browser autofill false positives.
+      const honeypot = form.querySelector('input[name="contact_website"], input[name="website"]');
+      if (honeypot) honeypot.value = '';
+
       try {
         const response = await fetch(form.action, {
           method: 'POST',
